@@ -1,0 +1,155 @@
+@font-face {
+    font-family: 'Odachi 400' ;
+    src: url("../fonts/Odachi\ 400.otf");
+}
+
+@font-face {
+    font-family: 'Moon Bold';
+    src: url("../fonts/Moon\ Bold.otf");
+}
+
+body {
+    line-height: 18px;
+}
+
+.top_bar {
+    width: 100%;
+    min-width: 1050px;
+    height: 50px;
+    background-color: #3f7299;
+    border-bottom: 0.17em solid #0f2363;
+    margin: 0 0 10px 0;
+    display: inline-flex;
+}
+
+.logo a{
+    font-family: 'Odachi 400', sans-serif;
+    margin-left: 10px;
+    font-size: 30px;
+    position: relative;
+    top: 13px;
+    color: #86d1cf;
+    text-decoration: none;
+    text-shadow: #73b6e2 0.4px 0.4px 0px;
+}
+
+nav {
+    float: right;
+    right: 1px;
+    position: absolute;
+    margin: 13px;
+}
+
+nav a{
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-size: 23px;
+}
+
+nav .fas:hover {
+    border-bottom: 7px solid #97c5e8;
+    text-decoration: none;
+    color: #fff;
+}
+
+nav #logout_icon {
+    padding-left: 25px;
+}
+
+nav .fa-sign-out-alt:hover {
+    border-bottom: 7px solid #97c5e8;
+    text-decoration: none;
+    color: #fff;
+}
+
+nav #user {
+    text-decoration: none;
+}
+
+nav #user:hover {
+    color: #fff;
+    border-bottom: 7px solid #97c5e8;
+}
+
+.wrapper {
+    margin: 0px auto;
+    margin-top: -3%;
+    top: 50px;
+    position: relative;
+    padding: 0px 10px;
+    width: 75%;
+    min-width: 950px;
+}
+
+.col {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    box-shadow: 3px 2px 4px #d3d3d3;
+    z-index: -1;
+}
+
+.user_det {
+    width: 250px;
+    float: left;
+    margin-bottom: 20px;
+    height: 160px;
+}
+
+.user_det img {
+    height: 125px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.user_det_lt_rt {
+    width: 110px;
+    display: inline-block;
+    position: absolute;
+}
+
+.user_det_lt_rt a {
+    text-decoration: none;
+}
+
+.main {
+    width: 75%;
+    float: right;
+    z-index: -1;
+    min-height: 160px;
+}
+
+.index_form {
+    width: 100%;
+}
+
+.index_form textarea {
+    width: 81%;
+    height: 60px;
+    border-radius: 5px;
+    margin-right: 5px;
+    border: 1px solid #b3c9b9;
+    font-size: 15px;
+    padding: 5px;
+}
+
+textarea:focus {
+    outline: 0;
+}
+
+.index_form input[type="submit"] {
+    width: 11%;
+    height: 60px;
+    border: none;
+    border-radius: 7px;
+    background-color:#0b3d5e;
+    font-family: 'Odachi 400', sans-serif;
+    color: #fff;
+    text-shadow: #91c4e6 0.5px 0.3px 0px;
+    font-size: 30px;
+    position: absolute;
+    outline: 0;
+    margin: 0;
+}

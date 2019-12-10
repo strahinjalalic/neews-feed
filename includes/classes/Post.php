@@ -32,52 +32,84 @@ class Post
         }
     }
 
-    public function postsByFriends() {
+    public function postsByFriends($data, $limit) {
         global $database;
         $str_posts = "";
+        $page = $data['page'];
+
+        if($page == 1) {
+            $start = 0;
+        } else {
+            $start = ($page - 1) * $limit;
+        }
+
         $posts = $database->query("SELECT * FROM posts WHERE deleted = 'no' ORDER BY id DESC");
-        while($row = mysqli_fetch_array($posts)) {
-            $id = $row['id'];
-            $body = $row['body'];
-            $added_by = $row['added_by'];
-            $user_to = $row['user_to'];
-            $date_added = $row['date_added'];
-            
-            if($user_to != "none") { //postavljanje linka za profil user-a na cijem se profilu pise post
-                $user_to_instance = new User($user_to);
-                $user_to_name = $user_to_instance->getFirstAndLastName();
-                $user_to = "to <a href='" . $user_to . "'>{$user_to_name}</a>";
+
+        if(mysqli_num_rows($posts) > 0) {
+            $iterations = 0; 
+            $count = 1;
+
+            while($row = mysqli_fetch_array($posts)) {
+                $id = $row['id'];
+                $body = $row['body'];
+                $added_by = $row['added_by'];
+                $user_to = $row['user_to'];
+                $date_added = $row['date_added'];
+                
+                if($user_to != "none") { //postavljanje linka za profil user-a na cijem se profilu pise post
+                    $user_to_instance = new User($user_to);
+                    $user_to_name = $user_to_instance->getFirstAndLastName();
+                    $user_to = "to <a href='" . $user_to . "'>{$user_to_name}</a>";
+                } else {
+                    $user_to = "";
+                }
+
+                $added_by_obj = new User($added_by);
+                if($added_by_obj->isClosed()) { //ako je profil ugasen, ne prikazuj postove
+                    continue;
+                }
+
+                if($iterations++ < $start) { //da se ne bi svi load-ovani postovi iznova ucitavali
+                    continue;
+                }
+
+                if($count > $limit) { //izvlacimo 10 postova, cim predje limit iskace iz petlje
+                    break;
+                } else {
+                    $count++;
+                }
+
+                $post_user_info = $database->query("SELECT first_name, last_name, profile_picture FROM users WHERE username = '{$added_by}'");
+                $user_row = mysqli_fetch_array($post_user_info);
+                $first_name = $user_row['first_name'];
+                $last_name = $user_row['last_name'];
+                $profile_img = $user_row['profile_picture'];
+
+            $date_added_full = Carbon::create($date_added)->diffForHumans();
+            $str_posts .= <<<DELIMETER
+                            <div class='posts'>
+                                <div class='profile_img_post'>
+                                <img src='{$profile_img}' width='60'>
+                                </div>
+                                <div class='posted_by' style='color:#acacac'>
+                                    <a href='{$added_by}'> {$first_name} {$last_name} </a> {$user_to} &nbsp;&nbsp;&nbsp;&nbsp; <span class='date_added'>{$date_added_full}</span>
+                                </div>
+                                <div id='post_content'>
+                                    {$body}
+                                    <br>
+                                </div>
+                            </div>
+                            <hr>
+                            DELIMETER; 
+            }
+
+            if($count > $limit) {
+                $str_posts .= "<input type='hidden' class='nextPage' value='" . ($page + 1) . "'>
+                        <input type='hidden' class='noPostsLeft' value='false'>";
             } else {
-                $user_to = "";
+                $str_posts .= "<input type='hidden' class='noPostsLeft' value='true'><p style='text-align:centre;'>No More Posts To Show!</p>";
             }
 
-            $added_by_obj = new User($added_by);
-            if($added_by_obj->isClosed()) { //ako je profil ugasen, ne prikazuj postove
-                break;
-            }
-
-            $post_user_info = $database->query("SELECT first_name, last_name, profile_picture FROM users WHERE username = '{$added_by}'");
-            $user_row = mysqli_fetch_array($post_user_info);
-            $first_name = $user_row['first_name'];
-            $last_name = $user_row['last_name'];
-            $profile_img = $user_row['profile_picture'];
-
-           $date_added_full = Carbon::create($date_added)->diffForHumans();
-           $str_posts .= <<<DELIMETER
-                        <div class='posts'>
-                            <div class='profile_img_post'>
-                               <img src='{$profile_img}' width='60'>
-                            </div>
-                            <div class='posted_by' style='color:#acacac'>
-                                <a href='{$added_by}'> {$first_name} {$last_name} </a> {$user_to} &nbsp;&nbsp;&nbsp;&nbsp; <span class='date_added'>{$date_added_full}</span>
-                            </div>
-                            <div id='post_content'>
-                                {$body}
-                                <br>
-                            </div>
-                        </div>
-                        <hr>
-                        DELIMETER; 
         }
         echo $str_posts;
     }

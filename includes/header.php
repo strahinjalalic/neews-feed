@@ -20,6 +20,7 @@ $user = mysqli_fetch_array($name_query);
     <title>NEfeedWS</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    
 </head>
 <body>
     <div class="top_bar">

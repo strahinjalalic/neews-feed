@@ -23,7 +23,57 @@
             <input type="submit" value="Post" name="submit_post">
             <hr>
         </form>
-        <?php $posts_to_load = new Post($loggedIn);
-        $posts_to_load->postsByFriends();  ?>
+
+        <div class='posts_lazy'></div>
+        <img src="assets/images/icons/loading.gif" id="loading">
     </div>
+
+
+    <script>
+        var loggedIn = "<?php echo $loggedIn; ?>";
+
+        $(document).ready(function() {
+            $("#loading").show();
+
+            $.ajax({
+                url: "lazy_load_ajax.php",
+                type: "POST",
+                data: "page=1&loggedIn=" + loggedIn,
+                cache: false, 
+
+                success: function(data) {
+                    $("#loading").hide();
+                    $(".posts_lazy").html(data);
+                }
+            });
+
+            $(window).scroll(function() {
+                var height = $(".posts_lazy").height();
+                var scrollTop = $(this).scrollTop();
+                var page = $('.posts_lazy').find('.nextPage').val();
+                var noPostsLeft = $('.posts_lazy').find('.noPostsLeft').val();
+
+                if((document.body.scrollHeight == scrollTop + window.innerHeight) && noPostsLeft == 'false') {
+                    $("#loading").show();
+
+                    $.ajax({
+                        url: "lazy_load_ajax.php",
+                        type: "POST",
+                        data: "page="+ page + "&loggedIn=" + loggedIn,
+                        cache: false, 
+
+                        success: function(response) {
+                            $('.posts_lazy').find('.nextPage').remove();
+                            $('.posts_lazy').find('.noPostsLeft').remove();
+
+                            $('#loading').hide();
+                            $('.posts_lazy').append(response);
+                        }
+                    });
+                }
+                return false;
+
+            });
+        });
+    </script>
 </div>

@@ -20,6 +20,8 @@ body {
     border-bottom: 0.17em solid #0f2363;
     margin: 0 0 10px 0;
     display: inline-flex;
+    position: fixed;
+	z-index: 10;
 }
 
 .logo a{
@@ -74,7 +76,6 @@ nav #user:hover {
 
 .wrapper {
     margin: 0px auto;
-    margin-top: -3%;
     top: 50px;
     position: relative;
     padding: 0px 10px;
@@ -85,14 +86,16 @@ nav #user:hover {
 .col {
     background-color: #fff;
     padding: 10px;
+    margin-top: 10px;
     border: 1px solid #d3d3d3;
     border-radius: 5px;
-    box-shadow: 3px 2px 4px #d3d3d3;
+    box-shadow: 2px 2px 4px #d3d3d3;
     z-index: -1;
 }
 
 .user_det {
     width: 250px;
+    margin-top: 10px;
     float: left;
     margin-bottom: 20px;
     height: 160px;
@@ -102,12 +105,14 @@ nav #user:hover {
     height: 125px;
     border-radius: 5px;
     margin-right: 5px;
+    margin-top: 10px;
 }
 
 .user_det_lt_rt {
     width: 110px;
     display: inline-block;
     position: absolute;
+    margin-top: 10px;
 }
 
 .user_det_lt_rt a {

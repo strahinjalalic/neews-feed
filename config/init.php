@@ -7,6 +7,7 @@ defined("DB_PASSWORD") ? null : define("DB_PASSWORD", "Levaobala1!");
 defined("DB_NAME") ? null : define("DB_NAME", "nefeedws");
 require_once("database.php");
 require_once("includes/classes/User.php");
+require_once("includes/classes/Post.php");
 
 if($_SERVER['PHP_SELF'] != '/nefeedws/register.php') { //ne ukljucuju se ovi fajlovi ukoliko smo na register stranici
     include("includes/header.php");

@@ -1,4 +1,7 @@
 <?php
+require 'vendor/autoload.php';
+use Carbon\Carbon; 
+
 class Post
 {
     private $user_object;
@@ -8,19 +11,74 @@ class Post
         $this->user_object = new User($user);
     }
 
-    public function submitPost($body, $post_to)
+    public function submitPost($body, $user_to)
     {
         global $database;
         $body = $database->escape_string($body);
-        $delete_spaces = preg_match('/\s+/', '', $body);
+        $delete_spaces = preg_replace('/\s+/', '', $body);
 
         if ($delete_spaces != '') { //ako ima sadrzaja
-            $date_added = date("Y-m-d H:i:s");
+            $date_added = Carbon::now()->toDateTimeString();
             $added_by = $this->user_object->getUsername();
 
             if($user_to == $added_by) { //ako je korisnik na svom profilu
                $user_to = "none";
             }   
+
+            $insert = $database->query("INSERT INTO posts VALUES('', '{$body}', '{$added_by}', '{$user_to}', '{$date_added}', 'no', 'no', '0')");
+            $last_id = mysqli_insert_id($database->db_connection());
+
+            $increment_user_posts = $this->user_object->incrementUserPosts();
         }
+    }
+
+    public function postsByFriends() {
+        global $database;
+        $str_posts = "";
+        $posts = $database->query("SELECT * FROM posts WHERE deleted = 'no' ORDER BY id DESC");
+        while($row = mysqli_fetch_array($posts)) {
+            $id = $row['id'];
+            $body = $row['body'];
+            $added_by = $row['added_by'];
+            $user_to = $row['user_to'];
+            $date_added = $row['date_added'];
+            
+            if($user_to != "none") { //postavljanje linka za profil user-a na cijem se profilu pise post
+                $user_to_instance = new User($user_to);
+                $user_to_name = $user_to_instance->getFirstAndLastName();
+                $user_to = "to <a href='" . $user_to . "'>{$user_to_name}</a>";
+            } else {
+                $user_to = "";
+            }
+
+            $added_by_obj = new User($added_by);
+            if($added_by_obj->isClosed()) { //ako je profil ugasen, ne prikazuj postove
+                break;
+            }
+
+            $post_user_info = $database->query("SELECT first_name, last_name, profile_picture FROM users WHERE username = '{$added_by}'");
+            $user_row = mysqli_fetch_array($post_user_info);
+            $first_name = $user_row['first_name'];
+            $last_name = $user_row['last_name'];
+            $profile_img = $user_row['profile_picture'];
+
+           $date_added_full = Carbon::create($date_added)->diffForHumans();
+           $str_posts .= <<<DELIMETER
+                        <div class='posts'>
+                            <div class='profile_img_post'>
+                               <img src='{$profile_img}' width='60'>
+                            </div>
+                            <div class='posted_by' style='color:#acacac'>
+                                <a href='{$added_by}'> {$first_name} {$last_name} </a> {$user_to} &nbsp;&nbsp;&nbsp;&nbsp; <span class='date_added'>{$date_added_full}</span>
+                            </div>
+                            <div id='post_content'>
+                                {$body}
+                                <br>
+                            </div>
+                        </div>
+                        <hr>
+                        DELIMETER; 
+        }
+        echo $str_posts;
     }
 }

@@ -27,7 +27,7 @@ $user = mysqli_fetch_array($name_query);
             <a href="index.php">FeeDNewS</a>
         </div>
         <nav>
-            <a id='user' href="<?php echo $loggedIn; ?>"><?php echo $user['first_name']; ?></a>
+            <a id='user' href="<?php echo $loggedIn; ?>"><?php echo $user['username']; ?></a>
             <a href="#"><i class="fas fa-home"></i></a>
             <a href="#"><i class="fas fa-envelope"></i></a>
             <a href="#"><i class="fas fa-bell"></i></a>

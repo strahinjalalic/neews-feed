@@ -33,8 +33,18 @@ class User {
         return false;
     }
 
-}
+    public function isFriend($added_by) {
+        if((strstr($this->user['friends_array'], $added_by)) || $added_by == $this->user['username']) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public function getProfileImage() {
+        return $this->user['profile_picture'];
+    }
+}
 
 
 ?>

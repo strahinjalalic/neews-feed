@@ -183,3 +183,52 @@ textarea:focus {
     float: right;
     color: #59585e;
 }
+
+#comment_iframe {
+    max-height: 250px;
+    width: 100%;
+    background-color: #f5f0f0;
+    margin-top: 5px;
+}
+
+#load_comments {
+    padding: 0px 5px 5px 5px;
+}
+
+#load_comments img {
+    margin: 0px 3px 3px;
+    border-radius: 3px;
+}
+
+#load_comments a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+#comment_form textarea {
+    width: 80%;
+    height: 36px;
+    border-radius: 4px;
+    color: #2a313b;
+    font-size: 15px;
+    margin: 3px 3px 3px 5px;
+}
+
+#comment_form input[type="submit"] {
+    border: none;
+    background-color: #0b3d5e;
+    border-radius: 5px;
+    width: 10%;
+    height: 42px;
+    color: #fff;
+    text-align: center;
+    margin-top: 3px;
+    position: absolute;
+}
+
+.comm_likes {
+    padding: 0px;
+    text-decoration: none;
+    color: #3f7299;
+    border: none;
+}

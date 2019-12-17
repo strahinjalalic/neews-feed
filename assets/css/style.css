@@ -8,8 +8,13 @@
     src: url("../fonts/Moon\ Bold.otf");
 }
 
+html {
+    height: 100%;
+}
+
 body {
     line-height: 18px;
+    height: 100%;
 }
 
 .top_bar {
@@ -286,4 +291,63 @@ textarea:focus {
     font-size: 13px;
     color: #3f7299;
     cursor: pointer;
+}
+
+.user_profile {
+    top: -10px;
+    width: 18%;
+    max-width: 240px;
+    min-width: 130px;
+    height: 100%;
+    float: left;
+    position: relative;
+    background-color: #749cdb;
+    border-right: 5px solid #0c2d63;
+    color: #fff;
+    margin-right: 20px;
+}
+
+.user_profile img {
+    max-width: 80px;
+    width: 60%;
+    margin: 15px;
+    border: 5px solid #0c2d63;
+    border-radius: 100px;
+}
+
+.user_info {
+    display: list-item;
+    background-color: #031836;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+}
+
+.user_info p {
+    margin: 0px 0px 0px 15px;
+    word-wrap: break-word;
+}
+
+.add_friend {
+    background-color: #05ad0e;
+}
+
+.remove_friend {
+    background-color: #b81800;
+}
+
+.request_sent {
+    background-color: orange;
+}
+
+.request_received {
+    background-color: #0283ed;
+}
+
+.user_profile input[type="submit"] {
+    width: 80%;
+    height: 35px;
+    border-radius: 5px;
+    margin: 7px 0 0 7px;
+    border: none;
+    color: white;
 }

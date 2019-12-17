@@ -231,4 +231,59 @@ textarea:focus {
     text-decoration: none;
     color: #3f7299;
     border: none;
+    height: auto;
+    width: auto;
+    display: inline-flex;
+    margin: 0;
+    background-color: transparent;
+}
+
+#comment_toggle:hover {
+    cursor: pointer;
+}
+
+.comm_likes iframe {
+    border: 0;
+    height: 19px;
+    width: 190px;
+}
+
+.like_post {
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    color: #3f7299;
+    padding: 0;
+    height: auto;
+    width: auto;
+    top: 1px;
+    margin: 0;
+}
+
+.like_post:hover {
+    cursor: pointer;
+}
+
+.unlike_post {
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    color: #3f7299;
+    padding: 0;
+    height: auto;
+    width: auto;
+    top: 1px;
+    margin: 0;
+}
+
+.unlike_post:hover {
+    cursor: pointer;
+}
+
+#likes_span {
+    float: right;
+    margin-top: -6px;
+    font-size: 13px;
+    color: #3f7299;
+    cursor: pointer;
 }

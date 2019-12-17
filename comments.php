@@ -12,14 +12,11 @@ if(!isset($_SESSION['username']) && !isset($_SESSION['name'])) {
     $loggedIn = $_SESSION['username'];
 }
 
-$name_query = $database->query("SELECT * FROM users WHERE username= '{$loggedIn}'");
-$user = mysqli_fetch_array($name_query);
-
 if(isset($_GET['post_id'])) {
     $id = $_GET['post_id'];
 }
 
-$find_users_query = $database->query("SELECT added_by, user_to FROM posts WHERE id = {$id}");
+$find_users_query = $database->query("SELECT added_by FROM posts WHERE id = {$id}");
 $row = mysqli_fetch_array($find_users_query);
 $added_by = $row['added_by'];
 

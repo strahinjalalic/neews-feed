@@ -102,11 +102,14 @@ class Post
                     </script>
 
                     <?php
-                    $num_comments_query = $database->query("SELECT * FROM comments WHERE post_id = '{$id}'");
+                    $num_comments_query = $database->query("SELECT * FROM comments WHERE post_id = {$id}");
                     $num_comments = mysqli_num_rows($num_comments_query);
+                    $count_likes_query = $database->query("SELECT * FROM likes WHERE post_id = {$id}");
+                    $count_likes = mysqli_num_rows($count_likes_query);
                     $date_added_full = Carbon::create($date_added)->diffForHumans();
+
                     $str_posts .= <<<DELIMETER
-                                    <div class='posts' onClick='javascript:toggle{$id}()'>
+                                    <div class='posts'>
                                         <div class='profile_img_post'>
                                         <img src='{$profile_img}' width='60'>
                                         </div>
@@ -120,7 +123,8 @@ class Post
                                             <br>
                                         </div>
                                         <div class='comm_likes'>
-                                            Comments({$num_comments}) &nbsp;&nbsp;&nbsp;
+                                            <span id='comment_toggle' onclick='javascript:toggle{$id}()'>Comments({$num_comments})</span> &nbsp;&nbsp;&nbsp;
+                                            <iframe src='like.php?post_id={$id}&username={$added_by}' scrolling='no'></iframe> &nbsp;&nbsp;&nbsp;&nbsp;
                                         </div>
                                     </div>
                                     <div class='post_comment' id='toggleComment{$id}' style='display:none'>

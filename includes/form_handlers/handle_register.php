@@ -69,7 +69,7 @@ if(isset($_POST['submit'])) {
             $prof_pic = "assets/images/profile_pictures/defaults/head_turqoise.png";
         }
 
-        $reg_query = $database->query("INSERT INTO users(first_name, last_name, username, email, password, signup_date, profile_picture, num_posts, num_likes, friends_array) VALUES('{$first_name}', '{$last_name}', '{$username}', '{$email_insert}', '{$password_hash}', '{$date}', '{$prof_pic}', '0', '0', ',')");
+        $reg_query = $database->query("INSERT INTO users(first_name, last_name, username, email, password, signup_date, profile_picture, num_posts, num_likes, friends_array) VALUES('{$first_name}', '{$last_name}', '{$username}', '{$email_insert}', '{$password_hash}', '{$date}', '{$prof_pic}', '0', '0', '')");
     }
 }
 ?>

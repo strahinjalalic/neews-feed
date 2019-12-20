@@ -8,10 +8,6 @@
     src: url("../fonts/Moon\ Bold.otf");
 }
 
-html {
-    height: 100%;
-}
-
 body {
     line-height: 18px;
     height: 100%;
@@ -350,4 +346,24 @@ textarea:focus {
     margin: 7px 0 0 7px;
     border: none;
     color: white;
+}
+
+.accept_request {
+    width: 17%;
+    height: 29px;
+    border-radius: 4px;
+    margin: 5px;
+    border: none;
+    color: #fff;
+    background-color: green;
+}
+
+.ignore_request {
+    width: 17%;
+    height: 29px;
+    border-radius: 5px;
+    margin: 5px;
+    border: none;
+    color: #fff;
+    background-color: red;
 }

@@ -11,12 +11,30 @@ if(isset($_GET['profile_user'])) {
 
     $count_friends = substr_count($user['friends_array'], ",");
 }
+
+$user_profile_obj = new User($username);
+$loggedIn_user = new User($loggedIn);
 ?>
+
+<?php
+if(isset($_POST['add_friend'])) {
+    $loggedIn_user->addFriend($username);
+}
+
+if(isset($_POST['remove_friend'])) {
+    $loggedIn_user->removeFriend($username);
+}
+
+if(isset($_POST['request_received'])) {
+    header("Location: requests.php");
+}
+?>
+
     <style>
         .wrapper {
             margin-left: 0px;
             padding-left: 0px;
-            height: 100%;
+            height: 100vh;
         }
     </style>
     <div class="user_profile">
@@ -28,30 +46,27 @@ if(isset($_GET['profile_user'])) {
         </div>
 
         <?php 
-            $user_profile_obj = new User($username);
-            $loggedIn_user = new User($loggedIn);
             if($user_profile_obj->isClosed()) {
                 header("Location: user_closed.php");
             }
-
-            if(!$loggedIn_user->isFriend($username) && $loggedIn_user != $username) { //ulogovani user nije na svom nalogu i nije prijatelj sa user-om na cijem se profilu nalazi
-                echo "<form action='{$username}' method='POST'>
-                        <input type='submit' name='add_friend' class='add_friend' value='Add Friend'>
-                      </form>";
-            } else if($loggedIn_user->isFriend($username) && $loggedIn_user != $username) {
-                echo "<form action='{$username}' method='POST'>
-                        <input type='submit' name='remove_friend' class='remove_friend' value='Remove Friend'>
-                      </form>";
-            } else if($loggedIn_user->didSentRequest($username)) {
-                echo "<form action='{$username}' method='POST'>
-                        <input type='submit' name='request_sent' class='request_sent' value='Request Sent'>
-                      </form>";
-            } else if($loggedIn_user->didReceiveRequest($username)) {
-                echo "<form action='{$username}' method='POST'>
-                        <input type='submit' name='request_received' class='request_received' value='Respond To Request'>
-                      </form>";
-            } else {
-                echo "";
+            if($loggedIn != $username) {
+                if($loggedIn_user->isFriend($username)) {
+                    echo "<form action='{$username}' method='POST'>
+                            <input type='submit' name='remove_friend' class='remove_friend' value='Remove Friend'>
+                        </form>";
+                } else if($loggedIn_user->didSentRequest($username)) {
+                    echo "<form action='{$username}' method='POST'>
+                            <input type='submit' name='request_sent' class='request_sent' value='Request Sent'>
+                        </form>";
+                } else if($loggedIn_user->didReceiveRequest($username)) {
+                    echo "<form action='{$username}' method='POST'>
+                            <input type='submit' name='request_received' class='request_received' value='Respond To Request'>
+                        </form>";
+                } else {
+                    echo "<form action='{$username}' method='POST'>
+                            <input type='submit' name='add_friend' class='add_friend' value='Add Friend'>
+                        </form>";
+                }
             }
         ?>
     </div>

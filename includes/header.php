@@ -32,7 +32,7 @@ $user = mysqli_fetch_array($name_query);
             <a href="#"><i class="fas fa-home"></i></a>
             <a href="#"><i class="fas fa-envelope"></i></a>
             <a href="#"><i class="fas fa-bell"></i></a>
-            <a href="#"><i class="fas fa-users"></i></a>
+            <a href="requests.php"><i class="fas fa-users"></i></a>
             <a href="#"><i class="fas fa-cog"></i></a>
             <a id='logout_icon' href="logout.php"><i class="fas fa-sign-out-alt"></i></a>
         </nav>

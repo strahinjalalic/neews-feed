@@ -233,7 +233,7 @@ textarea:focus {
     color: #3f7299;
     border: none;
     height: auto;
-    width: auto;
+    width: 100vh;
     display: inline-flex;
     margin: 0;
     background-color: transparent;
@@ -246,7 +246,7 @@ textarea:focus {
 .comm_likes iframe {
     border: 0;
     height: 19px;
-    width: 190px;
+    width: 130px;
 }
 
 .like_post {
@@ -366,4 +366,26 @@ textarea:focus {
     border: none;
     color: #fff;
     background-color: red;
+}
+
+.delete_post {
+    margin-left: 61vh;
+    height: 3vh;
+    padding: 5px;
+    border-radius: 4px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #a30023;
+}
+
+.delete_post:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.main_prof {
+    min-width: 675px;
+    float: left;
+    width: 103vh;
+    z-index: -1;
 }

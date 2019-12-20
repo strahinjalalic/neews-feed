@@ -108,7 +108,7 @@ class Post
                     $count_likes = mysqli_num_rows($count_likes_query);
                     $date_added_full = Carbon::create($date_added)->diffForHumans();
 
-                    $str_posts .= <<<DELIMETER
+                    $str_posts .= "
                                     <div class='posts'>
                                         <div class='profile_img_post'>
                                         <img src='{$profile_img}' width='60'>
@@ -125,14 +125,117 @@ class Post
                                         <div class='comm_likes'>
                                             <span id='comment_toggle' onclick='javascript:toggle{$id}()'>Comments({$num_comments})</span> &nbsp;&nbsp;&nbsp;
                                             <iframe src='like.php?post_id={$id}&username={$added_by}' scrolling='no'></iframe> &nbsp;&nbsp;&nbsp;&nbsp;
+                                           "; 
+                                            if($added_by == $this->user_object->getUsername()) $str_posts .= "<a class='delete_post' href='delete_post.php?post_id={$id}&added_by={$added_by}'>Delete</a>";
+                                            $str_posts .= "
                                         </div>
                                     </div>
                                     <div class='post_comment' id='toggleComment{$id}' style='display:none'>
                                         <iframe src='comments.php?post_id={$id}' id='comment_iframe' frameborder='0'></iframe>
                                     </div>
                                     <hr>
-                                    DELIMETER; 
+                                    "; 
                 }
+            }   if($count > $limit) {
+                    $str_posts .= "<input type='hidden' class='nextPage' value='" . ($page + 1) . "'>
+                        <input type='hidden' class='noPostsLeft' value='false'>";
+                    } else {
+                        $str_posts .= "<input type='hidden' class='noPostsLeft' value='true'><p style='text-align:centre;'>No More Posts To Show!</p>";
+                }
+            echo $str_posts;
+        }
+    }
+
+    public function profilePosts($data, $limit) {
+        global $database;
+        $str_posts = "";
+        $page = $data['page'];
+        $profile_user = $data['profileUser'];
+
+        if($page == 1) {
+            $start = 0;
+        } else {
+            $start = ($page - 1) * $limit;
+        }
+
+        $posts = $database->query("SELECT * FROM posts WHERE deleted = 'no' AND ((added_by = '{$profile_user}' AND user_to = 'none') OR user_to = '{$profile_user}') ORDER BY id DESC");
+        if(mysqli_num_rows($posts) > 0) {
+            $iterations = 0; 
+            $count = 1;
+
+            while($row = mysqli_fetch_array($posts)) {
+                $id = $row['id'];
+                $body = $row['body'];
+                $added_by = $row['added_by'];
+                $user_to = $row['user_to'];
+                $date_added = $row['date_added'];
+
+                if($iterations++ < $start) { //da se ne bi svi load-ovani postovi iznova ucitavali
+                    continue;
+                }
+
+                if($count > $limit) { //izvlacimo 10 postova, cim predje limit iskace iz petlje
+                    break;
+                } else {
+                    $count++;
+                }
+
+                $post_user_info = $database->query("SELECT first_name, last_name, profile_picture FROM users WHERE username = '{$added_by}'");
+                $user_row = mysqli_fetch_array($post_user_info);
+                $first_name = $user_row['first_name'];
+                $last_name = $user_row['last_name'];
+                $profile_img = $user_row['profile_picture'];
+                ?>
+
+                <script>
+                    function toggle<?php echo $id?>() {
+                        var target = $(event.target);
+                        if(!target.is("a")) {
+                            var element = document.getElementById("toggleComment<?php echo $id?>");
+                        if(element.style.display == "block") {
+                            element.style.display = 'none';
+                        } else {
+                            element.style.display = 'block';
+                        }
+                        }  
+                    }
+                </script>
+
+                <?php
+                $num_comments_query = $database->query("SELECT * FROM comments WHERE post_id = {$id}");
+                $num_comments = mysqli_num_rows($num_comments_query);
+                $count_likes_query = $database->query("SELECT * FROM likes WHERE post_id = {$id}");
+                $count_likes = mysqli_num_rows($count_likes_query);
+                $date_added_full = Carbon::create($date_added)->diffForHumans();
+
+                $str_posts .= "
+                            <div class='posts'>
+                                <div class='profile_img_post'>
+                                <img src='{$profile_img}' width='60'>
+                                </div>
+                                <div class='posted_by' style='color:#acacac'>
+                                    <a href='{$added_by}'> {$first_name} {$last_name} </a> &nbsp;&nbsp;&nbsp;&nbsp; <span class='date_added'>{$date_added_full}</span>
+                                </div>
+                                <div id='post_content'>
+                                    {$body}
+                                    <br>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class='comm_likes'>
+                                    <span id='comment_toggle' onclick='javascript:toggle{$id}()'>Comments({$num_comments})</span> &nbsp;&nbsp;&nbsp;
+                                    <iframe src='like.php?post_id={$id}&username={$added_by}' scrolling='no'></iframe> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    "; 
+                                    if($added_by == $this->user_object->getUsername()) $str_posts .= "<a class='delete_post' href='delete_post.php?post_id={$id}&added_by={$added_by}'>Delete</a>";
+                                    $str_posts .= "
+                                </div>
+                            </div>
+                            <div class='post_comment' id='toggleComment{$id}' style='display:none'>
+                                <iframe src='comments.php?post_id={$id}' id='comment_iframe' frameborder='0'></iframe>
+                            </div>
+                            <hr>
+                            "; 
+                
             }   if($count > $limit) {
                     $str_posts .= "<input type='hidden' class='nextPage' value='" . ($page + 1) . "'>
                         <input type='hidden' class='noPostsLeft' value='false'>";

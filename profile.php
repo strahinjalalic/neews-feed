@@ -34,15 +34,20 @@ if(isset($_POST['request_received'])) {
         .wrapper {
             margin-left: 0px;
             padding-left: 0px;
+        }
+
+        .user_profile {
             height: 100vh;
         }
     </style>
     <div class="user_profile">
         <img src="<?php echo $user['profile_picture'] ?>" height="80px" alt="profile_user_<?php echo $username; ?>">
+        <span><?php echo $user['first_name'] . " " . $user['last_name']; ?></span>
         <div class="user_info">
             <p><?php echo "Posts: " . $user['num_posts']; ?></p>
-            <p><?php echo "Followers: " . $count_friends; ?></p>
+            <p><?php echo "Friends: " . $count_friends; ?></p>
             <p><?php echo "Signup date: " . Carbon::create($user['signup_date'])->diffForHumans(); ?></p>
+            <p><?php if($loggedIn != $username) echo "<br><span id='mutual'data-toggle='modal' data-target='#mutual_friends'>Mutual Friends: " . $loggedIn_user->mutualFriends($username) . "</span>";?></p>
         </div>
 
         <?php 
@@ -51,19 +56,19 @@ if(isset($_POST['request_received'])) {
             }
             if($loggedIn != $username) {
                 if($loggedIn_user->isFriend($username)) {
-                    echo "<form action='{$username}' method='POST'>
+                    echo "<br><form action='{$username}' method='POST'>
                             <input type='submit' name='remove_friend' class='remove_friend' value='Remove Friend'>
                         </form>";
                 } else if($loggedIn_user->didSentRequest($username)) {
-                    echo "<form action='{$username}' method='POST'>
+                    echo "<br><form action='{$username}' method='POST'>
                             <input type='submit' name='request_sent' class='request_sent' value='Request Sent'>
                         </form>";
                 } else if($loggedIn_user->didReceiveRequest($username)) {
-                    echo "<form action='{$username}' method='POST'>
+                    echo "<br><form action='{$username}' method='POST'>
                             <input type='submit' name='request_received' class='request_received' value='Respond To Request'>
                         </form>";
                 } else {
-                    echo "<form action='{$username}' method='POST'>
+                    echo "<br><form action='{$username}' method='POST'>
                             <input type='submit' name='add_friend' class='add_friend' value='Add Friend'>
                         </form>";
                 }    
@@ -73,6 +78,45 @@ if(isset($_POST['request_received'])) {
             <?php } ?>
     </div>
 
+
+    <?php if($loggedIn_user->mutualFriends($username) > 0) { ?>
+        <div class="modal fade" id="mutual_friends" tabindex="-1" role="dialog" aria-labelledby="mutualFriendsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">You and <?php echo $user_profile_obj->getFirstAndLastName(); ?> have mutual friends! </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?php 
+                       $mutual_friends = $loggedIn_user->displayMutualFriends($username); 
+                       foreach($mutual_friends as $friend) {
+                        $mutual_friend = new User($friend);
+                        if($mutual_friend->getUsername()) { 
+                           echo "
+                           <div class='mutual_friends_list'>
+                                <div class='friend_pic'>
+                                    <img src='{$mutual_friend->getProfileImage()}'>
+                                </div>
+                                <div class='friend_info'>
+                                    <a href='{$mutual_friend->getUsername()}' id='modal_href'>{$mutual_friend->getFirstAndLastName()}</a> ({$mutual_friend->getUsername()})
+                                </div>
+                           </div>
+                           <hr>
+                           ";
+                       } 
+                    }
+                    ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 
     <div class="main_prof col">
         <div class='posts_lazy'></div>

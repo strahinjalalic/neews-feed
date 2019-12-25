@@ -10,7 +10,6 @@
 
 body {
     line-height: 18px;
-    height: 100%;
 }
 
 .top_bar {
@@ -386,6 +385,49 @@ textarea:focus {
 .main_prof {
     min-width: 675px;
     float: left;
-    width: 103vh;
+    width: 75%;
     z-index: -1;
+}
+
+#mutual {
+    background-color: #185cba;
+    color: #fff;
+    border: 2px solid #667a96;
+    border-radius: 3px;
+}
+
+#mutual:hover {
+    cursor: pointer;
+}
+
+.mutual_friends_list {
+    width: 100%;
+    height: 50px;
+}
+
+.friend_pic {
+    float: left;
+    width: 17%;
+    height: 55px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.friend_pic img {
+    height: 50px;
+    border-radius: 2px;
+}
+
+.friend_info {
+    width: 75%;
+    height: 55px;
+    float: right;
+    text-align: -webkit-left;
+    text-decoration: none;
+    padding-top: 13px;
+}
+
+#modal_href {
+    text-decoration: none;
+    color: #264f87;
 }

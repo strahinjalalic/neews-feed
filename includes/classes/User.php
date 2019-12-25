@@ -93,6 +93,38 @@ class User {
         $insert_into_requests = $database->query("INSERT INTO friend_requests(user_to, user_from) VALUES('{$friend_username}', '{$loggedIn}')");
         header("Location: {$friend_username}");
     }
+
+    public function mutualFriends($friend_username) {
+        global $database;
+        $loggedIn_friends = $this->user['friends_array'];
+        $convert_to_array = explode(",", $loggedIn_friends);
+
+        $username_friends_string_query = $database->query("SELECT friends_array FROM users WHERE username='{$friend_username}'");
+        $row = mysqli_fetch_array($username_friends_string_query);
+        $username_friends_string = $row['friends_array'];
+        $convert_to_array2 = explode(",", $username_friends_string);
+
+        $loggedIn_count_friends = count($convert_to_array); //broj prijatelja logovanog korisnika
+        $username_count_friends = count($convert_to_array2); //broj prijatelja drugog korisnika
+        $merge_arrays = array_merge($convert_to_array, $convert_to_array2); //spajanje nizova
+        $pull_same = count(array_unique($merge_arrays)); //izbacivanje istih elemenata
+        $mutual_friends = ($loggedIn_count_friends + $username_count_friends - 1) - $pull_same; //-1 nakon debagovanja daje tacan rezultat
+
+        return $mutual_friends;
+    }
+
+    public function displayMutualFriends($friend_username) {
+        global $database;
+        $loggedIn_friends = $this->user['friends_array'];
+        $convert_to_array = explode(",",$loggedIn_friends);
+
+        $username_friends_query = $database->query("SELECT friends_array FROM users WHERE username='{$friend_username}'");
+        $row = mysqli_fetch_array($username_friends_query);
+        $username_friends = $row['friends_array'];
+        $convert_to_array2 = explode(",",$username_friends);
+        $merge = array_intersect($convert_to_array,$convert_to_array2);
+        return $merge;
+    }
 }
 
 

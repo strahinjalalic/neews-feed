@@ -243,6 +243,8 @@ class Post
                         $str_posts .= "<input type='hidden' class='noPostsLeft' value='true'><p style='text-align:centre;'>No More Posts To Show!</p>";
                 }
             echo $str_posts;
+        } else {
+            echo "There Are No Posts!";
         }
     }
 }

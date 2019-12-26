@@ -20,6 +20,8 @@ $user = mysqli_fetch_array($name_query);
     <title>NEfeedWS</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://unpkg.com/dropzone/dist/dropzone.css" rel="stylesheet"/>
+    <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
     
 </head>
 <body>

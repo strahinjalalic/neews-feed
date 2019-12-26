@@ -431,3 +431,27 @@ textarea:focus {
     text-decoration: none;
     color: #264f87;
 }
+
+#name {
+    width: 50%;
+    height: 20px;
+}
+
+.inputfile {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+    z-index: -1;
+    
+}
+
+.label_file {
+    border: 2px solid #3b3e9c;
+    background-color: #3b3e9c;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-top: 0;
+}

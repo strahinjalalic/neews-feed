@@ -211,10 +211,10 @@ class Post
                 $str_posts .= "
                             <div class='posts'>
                                 <div class='profile_img_post'>
-                                <img src='{$profile_img}' width='60'>
+                                    <img src='{$profile_img}' width='60' id='profile_img_posts'>
                                 </div>
                                 <div class='posted_by' style='color:#acacac'>
-                                    <a href='{$added_by}'> {$first_name} {$last_name} </a> &nbsp;&nbsp;&nbsp;&nbsp; <span class='date_added'>{$date_added_full}</span>
+                                    <a href='{$added_by}' id='added_by'> {$first_name} {$last_name} </a> &nbsp;&nbsp;&nbsp;&nbsp; <span class='date_added'>{$date_added_full}</span>
                                 </div>
                                 <div id='post_content'>
                                     {$body}

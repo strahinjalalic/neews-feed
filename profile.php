@@ -34,15 +34,24 @@ if(isset($_POST['request_received'])) {
         .wrapper {
             margin-left: 0px;
             padding-left: 0px;
+            min-height: 130vh;
         }
 
         .user_profile {
-            height: 100vh;
+            min-height: 100vh;
+            overflow: auto;
+            display: block;
         }
     </style>
     <div class="user_profile">
-        <img src="<?php echo $user['profile_picture'] ?>" height="80px" alt="profile_user_<?php echo $username; ?>">
-        <span><?php echo $user['first_name'] . " " . $user['last_name']; ?></span>
+        <img src="<?php echo $user['profile_picture'] ?>" height="80px" alt="profile_user_<?php echo $username; ?>" id='profile_img' >
+        <span id='name'><?php echo $user['first_name'] . " " . $user['last_name']; ?></span>
+        <?php  if($user['username'] == $loggedIn){ ?>
+            <form action="" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file" class="inputfile" />
+                <label for="file" class='label_file'>Upload image</label>
+            </form>
+        <?php } ?>
         <div class="user_info">
             <p><?php echo "Posts: " . $user['num_posts']; ?></p>
             <p><?php echo "Friends: " . $count_friends; ?></p>
@@ -195,6 +204,27 @@ if(isset($_POST['request_received'])) {
                 });
             }
             return false;
+        });
+
+        $("#file").change(function() {
+            var username_loggedIn = "<?php echo $loggedIn; ?>";
+            var data = new FormData();
+            data.append('file', $("#file")[0].files[0]);
+            $.ajax({
+                url: "upload.php",
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    $('#profile_img').attr("src", data);
+                        $('.profile_img_post').each(function() {
+                            if($("#added_by").attr("href") == username) { 
+                                $(this).html("<img src='" + data + "' width='60'>");
+                            }
+                        });
+                }
+            });
         });
     });
 </script>

@@ -129,7 +129,7 @@ if(isset($_POST['request_received'])) {
 
     <div class="main_prof col">
         <div class='posts_lazy'></div>
-        <img src="assets/images/icons/loading.gif" id="loading">
+        <img src="assets/images/icons/loading.gif" id="loading"> 
     </div>
     
     <div class="modal fade" id="post_form" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">

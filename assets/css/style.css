@@ -94,11 +94,11 @@ nav #user:hover {
 }
 
 .user_det {
-    width: 250px;
+    width: 260px;
     margin-top: 10px;
     float: left;
     margin-bottom: 20px;
-    height: 160px;
+    min-height: 160px;
 }
 
 .user_det img {
@@ -123,7 +123,7 @@ nav #user:hover {
     width: 75%;
     float: right;
     z-index: -1;
-    min-height: 160px;
+    min-height: 180px;
 }
 
 .index_form {
@@ -454,4 +454,155 @@ textarea:focus {
     cursor: pointer;
     margin-bottom: 0;
     margin-top: 0;
+}
+
+#message_content {
+    margin-right: 7px;
+    border-radius: 4px;
+    border: 2px solid #d3d3d3;
+    font-size: 13px;
+    width: 80%;
+}
+
+#send_message {
+    width: 14%;
+    height: 42px;
+    margin:0;
+    position: absolute;
+    background-color:#0b3d5e;
+    font-family: 'Odachi 400', sans-serif;
+    color: #fff;
+    text-shadow: #91c4e6 0.5px 0.3px 0px;
+    font-size: 30px;
+    border: none;
+    border-radius: 4px;
+}
+
+.message {
+    border: 1px solid #000;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    padding: 5px 7px;
+}
+
+.message#blue {
+    background-color: #007bff;
+    border-color: #2980b9;
+    float: right;
+    margin-bottom: 6px;
+    margin-right: 10px;
+}
+
+.message#green {
+    background-color: #4b8a42;
+    border-color: #0f6303;
+    float: left;
+    margin-bottom: 6px;
+    margin-left: 7px;
+}
+
+.message_retrieve {
+    height: 65%;
+    min-height: 300px;
+    max-height: 400px;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin-bottom: 10px;
+}
+
+.all_conversations {
+    max-height: 215px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.all_conversations a {
+    text-decoration: none;
+}
+
+.user_messages {
+    border-bottom: 1px solid #d3d3d3;
+    padding: 8px 8px 10px 8px;
+}
+
+.user_messages:hover {
+    background-color: #d3d3d3;
+}
+
+.user_messages img {
+    height: 39px;
+    float: left;
+}
+
+#grey {
+    color: #8c8c8c;
+}
+
+.display_friend {
+    padding: 5px 5px 0px 5px;
+    height: 10vh;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.display_friend a {
+    float: none;   
+}
+
+.display_friend a:hover {
+    text-decoration: none;
+}
+
+.display_friend:hover {
+    background-color: #ebebeb;
+    text-decoration: none;
+}
+
+.live_search_img img {
+    height: 50px;
+    border-radius: 25px;
+    margin: 1px 12px 0px 2px;
+    float: left;
+}
+
+.live_search_text {
+    background-color: transparent;
+}
+
+.live_search_text p{
+    margin-left: 7px;
+    font-size: 13px;
+}
+
+.dropdown_data {
+    background-color: lightgoldenrodyellow;
+    border: 1px solid #8c8c8c;
+    border-radius: 0px 0px 8px 8px;
+    border-top: none;
+    width: 300px;
+    position: absolute;
+    right: 1px;
+    top: 50px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.dropdown_data a {
+    text-decoration: none;
+}
+
+.notification_msg {
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #f00;
+    border-radius: 10px;
+    position: absolute;
+    top: -4px;
+    left: 8px;
 }

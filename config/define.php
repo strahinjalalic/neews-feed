@@ -7,4 +7,5 @@ defined("DB_NAME") ? null : define("DB_NAME", "nefeedws");
 require_once("database.php");
 require_once("includes/classes/User.php");
 require_once("includes/classes/Post.php");
+require_once("includes/classes/Message.php");
 ?>

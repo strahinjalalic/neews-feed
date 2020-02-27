@@ -26,15 +26,15 @@ if(isset($_POST['send_message'])) {
 }
 ?>
 <div class="user_det col">
-        <a href="<?php echo $loggedIn; ?>"><img src="<?php echo $user['profile_picture']; ?>"></a>
-        <div class="user_det_lt_rt">
-            <a href="<?php echo $loggedIn; ?>">
-                <?php echo $user['first_name'] . " " . $user['last_name']; ?>
-            </a>
-            <br>
-            <?php echo 'Likes: ' . $user['num_likes'] . '<br>';
-                echo 'Posts: '. $user['num_posts'] . '<br>'  ?>
-        </div>
+    <a href="<?php echo $loggedIn; ?>"><img src="<?php echo $user['profile_picture']; ?>"></a>
+    <div class="user_det_lt_rt">
+        <a href="<?php echo $loggedIn; ?>">
+            <?php echo $user['first_name'] . " " . $user['last_name']; ?>
+        </a>
+        <br>
+        <?php echo 'Likes: ' . $user['num_likes'] . '<br>';
+            echo 'Posts: '. $user['num_posts'] . '<br>'  ?>
+    </div>
 </div>
 <div class="main col">
     <?php 

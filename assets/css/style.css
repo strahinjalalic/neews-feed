@@ -606,3 +606,53 @@ textarea:focus {
     top: -4px;
     left: 8px;
 }
+
+.resultNotification {
+    height: 33px;
+    color: lightskyblue;
+    padding-bottom: 5px;
+}
+
+.resultNotification img {
+    height: 40px;
+    border-radius: 5px;
+    margin: 1px 12px 0px 2px;
+    float: left;
+}
+
+.timestamp {
+    font-size: 85%;
+    margin: 0;
+}
+
+.search {
+    margin: 12px 0px 0px 10%;
+}
+
+#search_input {
+    border: thin solid #031836;
+    float: left;
+    height: 23px;
+    outline: 0;
+    width: 25vh;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.button_search {
+    background-color: #f1f1f1;
+    border: thin solid #031836;
+    float: left;
+    cursor: pointer;
+    height: 23px;
+    text-align: center;
+    width: 40px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.button_search img {
+    margin-top: 1px;
+    width: 37px;
+    height: 21px;
+}

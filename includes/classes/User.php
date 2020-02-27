@@ -125,6 +125,13 @@ class User {
         $merge = array_intersect($convert_to_array,$convert_to_array2);
         return $merge;
     }
+
+    public function getRequestsNumber() {
+        global $database;
+        $username = $this->user['username'];
+        $query = $database->query("SELECT * FROM friend_requests WHERE user_to = '{$username}'");
+        return mysqli_num_rows($query);
+    }
 }
 
 

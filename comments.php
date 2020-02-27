@@ -16,14 +16,36 @@ if(isset($_GET['post_id'])) {
     $id = $_GET['post_id'];
 }
 
-$find_users_query = $database->query("SELECT added_by FROM posts WHERE id = {$id}");
+$find_users_query = $database->query("SELECT * FROM posts WHERE id = {$id}");
 $row = mysqli_fetch_array($find_users_query);
 $added_by = $row['added_by'];
+$user_to = $row['user_to'];
 
 if(isset($_POST['submit_comment'])) {
     $comment_content = $database->escape_string($_POST['comment_content']);
     $date_added = Carbon::now();
     $insert_comment = $database->query("INSERT INTO comments(comment_body, comment_by, comment_to, date_added, removed, post_id) VALUES('{$comment_content}', '{$loggedIn}', '{$added_by}', '{$date_added}', 'no', {$id})");
+
+    if($added_by != $loggedIn) { //komentarisanje posta nekom korisniku od strane logovanog
+        $notification = new Notification($loggedIn);
+        $notification->insertNotification($id, $added_by, 'comment');
+    } 
+    
+    if($user_to != 'none' && $user_to != $loggedIn) { 
+        $notification = new Notification($loggedIn);
+        $notification->insertNotification($id, $user_to, 'profile_comment');
+    }
+
+    $select_other_comments = $database->query("SELECT * FROM comments WHERE post_id={$id}");
+    $users_notified = array();
+    while($row = mysqli_fetch_array($select_other_comments)) {
+        if($row['comment_by'] != $added_by && $row['comment_by'] != $user_to && $row['comment_by'] != $loggedIn && !in_array($row['comment_by'], $users_notified)) {
+            $notification = new Notification($loggedIn);
+            $notification->insertNotification($id, $user_to, 'comment_post');
+
+            array_push($users_notified, $row['comment_by']);
+        }
+    }
 }
 ?>
 

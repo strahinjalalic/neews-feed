@@ -39,15 +39,22 @@ if (isset($_GET['post_id']) && isset($_GET['username'])) {
     $username = $_GET['username'];
 }
 
-$posts_query = $database->query("SELECT likes FROM posts WHERE id = {$id}");
+$posts_query = $database->query("SELECT * FROM posts WHERE id = {$id}");
 $row = mysqli_fetch_array($posts_query);
 $total_likes = $row['likes'];
+$added_by = $row['added_by'];
 
 if (isset($_POST['like'])) {
     $total_likes++;
     $likes_query = $database->query("INSERT INTO likes(username, post_id) VALUES('{$loggedIn}', {$id})");
     $update_user = $database->query("UPDATE users SET num_likes = num_likes+1 WHERE username = '{$username}'");
     $update_posts = $database->query("UPDATE posts SET likes = {$total_likes} WHERE id = {$id}");
+
+    if($loggedIn != $username) { //ako ne lajkuje korisnik sam sebi
+        $notification = new Notification($loggedIn);
+        $notification->insertNotification($id, $added_by, 'like');
+    }
+
     header('Location: ' . $_SERVER['REQUEST_URI']);
 }
 
@@ -64,7 +71,7 @@ if (mysqli_num_rows($user_liked_post) == 0) { //ako je logovani user lajkovo pos
     echo "<form action='like.php?post_id={$id}&username={$username}' method='POST'>
             <i class='far fa-thumbs-up'></i><input type='submit' name='like' value='Like' class='like_post'>
           </form>
-          <span id='likes_span'> {$total_likes} Likes </span>
+          <span id='likes_span'> {$total_likes} Likes </span> 
           ";
 } else {
     echo "<form action='like.php?post_id={$id}&username={$username}' method='POST'>

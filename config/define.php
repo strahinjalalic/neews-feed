@@ -8,4 +8,5 @@ require_once("database.php");
 require_once("includes/classes/User.php");
 require_once("includes/classes/Post.php");
 require_once("includes/classes/Message.php");
+require_once("includes/classes/Notification.php");
 ?>

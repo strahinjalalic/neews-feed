@@ -29,10 +29,29 @@ $user = mysqli_fetch_array($name_query);
         <div class="logo">
             <a href="index.php">FeeDNewS</a>
         </div>
+
+        <div class="search">
+            <form action="search.php" method="GET" name="search">
+                <input type="text" name="q" onkeyup="getLiveSearchData(this.value, '<?php echo $loggedIn; ?>')" placeholder="Search.." autocomplete="off" id='search_input'>
+                <div class="button_search">
+                    <img src="assets/images/icons/images.png">
+                </div>
+            </form>
+
+            <div class="search_results"></div>
+            <div class="search_results_footer_empty"></div>
+        </div>
+
         <nav>
             <?php 
                 $message = new Message($loggedIn);
                 $unread_msg = $message->getUnreadNumber();
+
+                $notification = new Notification($loggedIn);
+                $unread_notif = $notification->getUnreadNumber();
+
+                $user_for_req = new User($loggedIn);
+                $friend_req = $user_for_req->getRequestsNumber();
             ?>
 
             <a id='user' href="<?php echo $loggedIn; ?>"><?php echo $user['username']; ?></a>
@@ -44,8 +63,20 @@ $user = mysqli_fetch_array($name_query);
                     }
                 ?>
             </a>
-            <a href="#"><i class="fas fa-bell"></i></a>
-            <a href="requests.php"><i class="fas fa-users"></i></a>
+            <a href="javascript:void(0);" onclick="getDropdownData('<?php echo $loggedIn; ?>', 'notification')"><i class="fas fa-bell"></i>
+            <?php
+                if($unread_notif > 0) {
+                    echo "<span class='notification_msg' id='unread_notification'> {$unread_notif} </span>";
+                }
+            ?>
+            </a>
+            <a href="requests.php"><i class="fas fa-users"></i>
+            <?php
+                if($friend_req > 0) {
+                    echo "<span class='notification_msg' id='unread_notification'> {$friend_req} </span>";
+                }
+            ?>
+            </a>
             <a href="#"><i class="fas fa-cog"></i></a>
             <a id='logout_icon' href="logout.php"><i class="fas fa-sign-out-alt"></i></a>
         </nav>

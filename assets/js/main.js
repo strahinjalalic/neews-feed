@@ -67,9 +67,9 @@ function getLiveSearchData(value, loggedIn) {
             $('.search_results_footer_empty').toggleClass('.search_results_footer_empty');
         }
         $('.search_results').html(data);
-        $('.search_results_footer').html("<a href='search.php?q='" + value + "'>See Results</a>");
+        $('.search_results_footer').html("<a href='search.php?q=" + value + "'>See Results</a>");
 
-        if(data="") {
+        if(data=="") {
             $('.search_results_footer').html("");
             $('.search_results_footer').toggleClass('.search_results_footer_empty');
             $('.search_results_footer').toggleClass('.search_results_footer');
@@ -77,3 +77,12 @@ function getLiveSearchData(value, loggedIn) {
         }
     });
 }
+
+$(document).click(function(e) { //kada se izlistaju live search rezultati, klikom sa strane nestaju
+    if(e.target.class != 'search_results' && e.target.id != 'search_input') {
+        $('.search_results').html("");
+        $('.search_results_footer').html("");
+        $('.search_results_footer').toggleClass('.search_results_footer_empty');
+        $('.search_results_footer').toggleClass('.search_results_footer');
+    }
+});

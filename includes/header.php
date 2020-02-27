@@ -40,6 +40,7 @@ $user = mysqli_fetch_array($name_query);
 
             <div class="search_results"></div>
             <div class="search_results_footer_empty"></div>
+            <div class="search_results_footer"></div>
         </div>
 
         <nav>

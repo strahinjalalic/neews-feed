@@ -656,3 +656,55 @@ textarea:focus {
     width: 37px;
     height: 21px;
 }
+
+.search_results_footer {
+    padding: 3px 9px 0px 0px;
+    height: 25px;
+    border: 1px solid #f1f1f1;
+    border-top: none;
+    background-color: skyblue;
+    text-align: center;
+    font-size: 14px;
+}
+
+.search_results_footer a {
+    text-decoration: none;
+}
+
+.search_all {
+    padding: 10px;
+    height: 100px;
+}
+
+.search_all a {
+    text-decoration: none;
+}
+
+.friendButtons {
+    float: right;
+}
+
+.friendButtons input[type='submit'] {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.search_profile_picture {
+    float: left;
+    margin-right: 6px;
+}
+
+#search_hr {
+    margin-bottom: 0;
+}
+
+.request_sent_search {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: orange;
+    width: 13vh;
+}

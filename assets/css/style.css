@@ -708,3 +708,26 @@ textarea:focus {
     background-color: orange;
     width: 13vh;
 }
+
+#settings_pic {
+    height: 60px;
+    margin: 1px 12px 0px 2px;
+    float: left;
+}
+
+.settings_form input[type='text'], input[type='password'] {
+    border: 1px solid #ccc;
+    height: 20px;
+    padding: 4px 6px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.settings_update {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    color: #fff;
+}

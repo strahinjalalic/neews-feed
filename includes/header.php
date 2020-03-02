@@ -78,7 +78,7 @@ $user = mysqli_fetch_array($name_query);
                 }
             ?>
             </a>
-            <a href="#"><i class="fas fa-cog"></i></a>
+            <a href="settings.php"><i class="fas fa-cog"></i></a>
             <a id='logout_icon' href="logout.php"><i class="fas fa-sign-out-alt"></i></a>
         </nav>
         <div class="dropdown_data" style="height: 0px; border: none;"></div>

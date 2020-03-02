@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
 
     $password = $database->escape_string($_POST['reg_password']);
     if(strlen($password) < 5 || strlen($password) > 25) {
-        array_push($errors_array, "Your password must be between 2 and 25 characters!");
+        array_push($errors_array, "Your password must be between 5 and 25 characters!");
     }
     $confirm_pass = $database->escape_string($_POST['reg_confirm']);
     if($password != $confirm_pass) {

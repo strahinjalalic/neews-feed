@@ -11,7 +11,7 @@ class Post
         $this->user_object = new User($user);
     }
 
-    public function submitPost($body, $user_to)
+    public function submitPost($body, $user_to, $img_name)
     {
         global $database;
         $body = $database->escape_string($body);
@@ -25,7 +25,7 @@ class Post
                $user_to = "none";
             }   
 
-            $insert = $database->query("INSERT INTO posts VALUES('', '{$body}', '{$added_by}', '{$user_to}', '{$date_added}', 'no', 'no', '0')");
+            $insert = $database->query("INSERT INTO posts VALUES('', '{$body}', '{$added_by}', '{$user_to}', '{$date_added}', 'no', 'no', '0', '{$img_name}')");
             $last_id = mysqli_insert_id($database->db_connection());
 
             if($user_to != 'none') {
@@ -59,6 +59,7 @@ class Post
                 $added_by = $row['added_by'];
                 $user_to = $row['user_to'];
                 $date_added = $row['date_added'];
+                $image = $row['image'];
                 
                 if($user_to != "none") { //postavljanje linka za profil user-a na cijem se profilu pise post
                     $user_to_instance = new User($user_to);
@@ -112,6 +113,14 @@ class Post
                     $count_likes_query = $database->query("SELECT * FROM likes WHERE post_id = {$id}");
                     $count_likes = mysqli_num_rows($count_likes_query);
                     $date_added_full = Carbon::create($date_added)->diffForHumans();
+                    
+                    if($image != "") {
+                        $image_div = "<div class='post_img'>
+                                        <img src='{$image}'>
+                                    </div>";
+                    } else {
+                        $image_div = "";
+                    }
 
                     $str_posts .= "
                                     <div class='posts'>
@@ -124,6 +133,7 @@ class Post
                                         <div id='post_content'>
                                             {$body}
                                             <br>
+                                            {$image_div}
                                             <br>
                                             <br>
                                         </div>
